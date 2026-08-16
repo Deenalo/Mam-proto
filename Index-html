@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#f7f0e8" />
+  <title>¿Qué diría mamá?</title>
+  <style>
+    :root{
+      --bg:#f7f0e8;
+      --paper:#fffaf5;
+      --ink:#2c2825;
+      --muted:#756b64;
+      --line:#e6d9cf;
+      --rose:#e8b7b4;
+      --sage:#b9c9b2;
+      --sky:#bed2da;
+      --gold:#dec28a;
+      --shadow:0 12px 30px rgba(62,45,35,.10);
+      --radius:24px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:ui-rounded,"SF Pro Rounded","Nunito",system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      color:var(--ink);
+      background:
+        radial-gradient(circle at 0% 0%,rgba(232,183,180,.22),transparent 30%),
+        radial-gradient(circle at 100% 0%,rgba(190,210,218,.22),transparent 30%),
+        var(--bg);
+    }
+    .wrap{max-width:780px;margin:0 auto;padding:22px 16px 52px}
+    header{text-align:center;padding:18px 8px 8px}
+    .heart{font-size:30px;margin-bottom:10px}
+    h1{font-size:clamp(34px,9vw,52px);line-height:1.02;margin:0;letter-spacing:-1.2px}
+    .subtitle{max-width:590px;margin:14px auto 0;color:var(--muted);line-height:1.55;font-size:16px}
+    .intro,.panel{
+      margin:20px 0 18px;background:var(--paper);border:1px solid var(--line);
+      border-radius:var(--radius);box-shadow:var(--shadow);padding:18px;
+    }
+    .intro strong{display:block;font-size:18px;margin-bottom:5px}
+    .intro span,.panel p{color:var(--muted);font-size:14px;line-height:1.5}
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:18px 0}
+    .choice{
+      border:1px solid var(--line);background:white;border-radius:20px;min-height:120px;
+      padding:16px;box-shadow:0 6px 16px rgba(62,45,35,.06);text-align:left;cursor:pointer;
+      transition:.16s ease;color:var(--ink);
+    }
+    .choice:active{transform:scale(.98)}
+    .choice .emoji{font-size:30px;display:block;margin-bottom:9px}
+    .choice strong{display:block;font-size:16px;line-height:1.25}
+    .choice small{display:block;color:var(--muted);font-size:12px;line-height:1.35;margin-top:6px}
+    .card{
+      margin-top:18px;background:var(--paper);border:1px solid var(--line);border-radius:28px;
+      box-shadow:var(--shadow);padding:24px 20px;min-height:280px;display:flex;
+      flex-direction:column;justify-content:center;text-align:center;
+    }
+    .eyebrow{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:800;margin-bottom:12px}
+    .question{font-size:20px;font-weight:900;margin-bottom:16px}
+    .answer{font-family:Georgia,"Times New Roman",serif;font-size:24px;line-height:1.45;max-width:620px;margin:0 auto}
+    .signoff{margin-top:18px;color:var(--muted);font-size:14px;font-style:italic}
+    .row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+    .btn{border:0;border-radius:18px;padding:14px 16px;font-size:15px;font-weight:900;cursor:pointer}
+    .btn.primary{background:var(--ink);color:white}
+    .btn.secondary{background:white;color:var(--ink);border:1px solid var(--line)}
+    .btn.record{background:#7f3f46;color:white}
+    .btn.stop{background:#3d3d3d;color:white}
+    .record-box{
+      background:linear-gradient(145deg,rgba(232,183,180,.18),rgba(190,210,218,.16));
+      border:1px solid var(--line);border-radius:22px;padding:18px;margin-top:14px;
+    }
+    select,input[type="text"],textarea{
+      width:100%;border:1px solid var(--line);border-radius:14px;background:white;
+      padding:12px 13px;font:inherit;color:var(--ink);margin-top:8px;
+    }
+    textarea{min-height:95px;resize:vertical}
+    .status{margin-top:10px;font-size:13px;color:var(--muted)}
+    audio{width:100%;margin-top:12px}
+    .saved-list{display:grid;gap:10px;margin-top:14px}
+    .saved-item{background:white;border:1px solid var(--line);border-radius:16px;padding:12px}
+    .saved-item strong{display:block;margin-bottom:6px}
+    .saved-item small{color:var(--muted)}
+    .note{
+      margin-top:18px;background:linear-gradient(145deg,rgba(185,201,178,.25),rgba(222,194,138,.20));
+      border:1px solid var(--line);border-radius:22px;padding:17px;color:#554d47;line-height:1.5;font-size:14px;
+    }
+    footer{text-align:center;color:var(--muted);font-size:13px;padding:24px 6px 0}
+    .made{margin-top:8px;font-weight:700;color:#554d47}
+    @media(max-width:560px){
+      .grid{grid-template-columns:1fr}
+      .choice{min-height:auto}
+      .row{grid-template-columns:1fr}
+      .answer{font-size:22px}
+    }
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="heart">♡</div>
+    <h1>¿Qué diría mamá?</h1>
+    <div class="subtitle">
+      Un lugar para guardar ideas, opiniones, historias y mensajes de mamá para Margaret.
+    </div>
+  </header>
+
+  <section class="intro">
+    <strong>Elige lo que necesitas hoy.</strong>
+    <span>Los mensajes de abajo siguen siendo de ejemplo. La idea real es reemplazarlos con palabras tuyas y acompañarlos con tu propia voz.</span>
+  </section>
+
+  <section class="grid">
+    <button class="choice" onclick="showMessage('decision')"><span class="emoji">🧭</span><strong>Tengo que tomar una decisión grande</strong><small>Cuando ninguna opción se siente totalmente segura.</small></button>
+    <button class="choice" onclick="showMessage('courage')"><span class="emoji">🔥</span><strong>Necesito valor</strong><small>Para cuando sabes qué quieres, pero te da miedo.</small></button>
+    <button class="choice" onclick="showMessage('mistake')"><span class="emoji">🌧️</span><strong>Cometí un error</strong><small>Para esos días en que las cosas salieron mal.</small></button>
+    <button class="choice" onclick="showMessage('heartbreak')"><span class="emoji">💔</span><strong>Me rompieron el corazón</strong><small>O tú rompiste el de alguien y tampoco sabes qué hacer.</small></button>
+    <button class="choice" onclick="showMessage('future')"><span class="emoji">🌱</span><strong>No sé qué hacer con mi vida</strong><small>Estudios, trabajo, cambios, empezar de cero.</small></button>
+    <button class="choice" onclick="showMessage('truth')"><span class="emoji">👀</span><strong>Dime la verdad, mamá</strong><small>Cuando no quieres una frase bonita: quieres una opinión.</small></button>
+    <button class="choice" onclick="showMessage('love')"><span class="emoji">💞</span><strong>Estoy enamorada</strong><small>Para cuando todo se siente intensísimo y maravilloso.</small></button>
+    <button class="choice" onclick="showMessage('move')"><span class="emoji">🌎</span><strong>Me quiero mudar a otro país</strong><small>Cuando irte lejos se siente emocionante y aterrador al mismo tiempo.</small></button>
+    <button class="choice" onclick="showMessage('home')"><span class="emoji">🏡</span><strong>Quiero volver a casa</strong><small>Para cuando extrañas tus raíces o necesitas empezar otra vez.</small></button>
+    <button class="choice" onclick="showMessage('hug')"><span class="emoji">🫂</span><strong>Necesito un abrazo de mamá</strong><small>No consejo. No solución. Sólo un poquito de mamá.</small></button>
+  </section>
+
+  <section class="card" id="messageCard">
+    <div class="eyebrow">Un mensaje para Margaret</div>
+    <div class="question">Toca una situación arriba</div>
+    <div class="answer">Aquí aparecerán las palabras de mamá.</div>
+    <div class="signoff">— Mamá</div>
+  </section>
+
+  <div class="row">
+    <button class="btn secondary" onclick="randomMessage()">🎲 Una al azar</button>
+    <button class="btn primary" onclick="showMessage('hug')">♡ Necesito a mamá</button>
+  </div>
+
+  <section class="panel">
+    <div class="eyebrow">Modo mamá · prototipo</div>
+    <div class="question">🎙️ Grabar un mensaje</div>
+    <p>Esta versión sí puede grabar desde el navegador. Por ahora, el audio se queda guardado sólo en este dispositivo/navegador. No es todavía el sistema definitivo de respaldo.</p>
+
+    <div class="record-box">
+      <label><strong>¿Para qué situación es?</strong></label>
+      <select id="topic">
+        <option>Decisión grande</option>
+        <option>Necesito valor</option>
+        <option>Cometí un error</option>
+        <option>Corazón roto</option>
+        <option>No sé qué hacer con mi vida</option>
+        <option>Dime la verdad, mamá</option>
+        <option>Estoy enamorada</option>
+        <option>Me quiero mudar a otro país</option>
+        <option>Quiero volver a casa</option>
+        <option>Necesito un abrazo de mamá</option>
+        <option>Otro</option>
+      </select>
+
+      <input id="title" type="text" placeholder="Título opcional, por ejemplo: Si dudas de ti" />
+      <textarea id="noteText" placeholder="Escribe aquí una nota o contexto opcional..."></textarea>
+
+      <div class="row">
+        <button class="btn record" id="recordBtn" onclick="startRecording()">🎙️ Grabar</button>
+        <button class="btn stop" id="stopBtn" onclick="stopRecording()" disabled>■ Terminar</button>
+      </div>
+      <div class="status" id="status">Lista para grabar.</div>
+      <audio id="preview" controls style="display:none"></audio>
+      <button class="btn primary" id="saveBtn" onclick="saveRecording()" style="display:none;width:100%;margin-top:12px">Guardar este mensaje</button>
+    </div>
+
+    <div class="saved-list" id="savedList"></div>
+  </section>
+
+  <div class="note">
+    <strong>Importante:</strong> para una versión pensada para durar décadas, los audios no deberían depender sólo del navegador. Después habría que añadir almacenamiento real, copias de seguridad y una forma de exportar todo el archivo.
+  </div>
+
+  <footer>
+    Un pequeño archivo de ideas, recuerdos, opiniones y amor para volver a encontrar.
+    <div class="made">Hecho con ♥ para Margaret</div>
+  </footer>
+</div>
+
+<script>
+const messages = {
+  decision:{q:"Tengo que tomar una decisión grande",a:"Este texto es de ejemplo. Aquí irá una respuesta real de mamá sobre cómo pensar una decisión importante."},
+  courage:{q:"Necesito valor",a:"Este texto es de ejemplo. Aquí irá una respuesta real de mamá sobre miedo, riesgo y valentía."},
+  mistake:{q:"Cometí un error",a:"Este texto es de ejemplo. Aquí irá una respuesta real de mamá sobre equivocarse, reparar y seguir adelante."},
+  heartbreak:{q:"Me rompieron el corazón",a:"Este texto es de ejemplo. Aquí irá una respuesta real de mamá sobre amor, pérdida y relaciones."},
+  future:{q:"No sé qué hacer con mi vida",a:"Este texto es de ejemplo. Aquí irá una respuesta real de mamá sobre estudios, trabajo y encontrar dirección."},
+  truth:{q:"Dime la verdad, mamá",a:"Este texto es de ejemplo. Aquí irán opiniones directas de mamá, no respuestas genéricas."},
+  love:{q:"Estoy enamorada",a:"Este texto es de ejemplo. Aquí irá una respuesta real de mamá sobre enamorarse y conservar quién eres."},
+  move:{q:"Me quiero mudar a otro país",a:"Este texto es de ejemplo. Aquí irá una respuesta real de mamá sobre irte lejos, empezar de nuevo, miedo, curiosidad y hogar."},
+  home:{q:"Quiero volver a casa",a:"Este texto es de ejemplo. Aquí irá una respuesta real de mamá sobre regresar, cambiar de opinión y volver a tus raíces."},
+  hug:{q:"Necesito un abrazo de mamá",a:"Este texto es de ejemplo. Aquí irá un mensaje de mamá para cuando no quieras consejo, sólo sentirla cerca."}
+};
+
+function showMessage(key){
+  const m=messages[key];
+  const card=document.getElementById("messageCard");
+  card.innerHTML=`<div class="eyebrow">Un mensaje para Margaret</div><div class="question">${m.q}</div><div class="answer">${m.a}</div><div class="signoff">— Mamá</div>`;
+  card.scrollIntoView({behavior:"smooth",block:"center"});
+}
+function randomMessage(){
+  const keys=Object.keys(messages);
+  showMessage(keys[Math.floor(Math.random()*keys.length)]);
+}
+
+let recorder, chunks=[], currentBlob=null;
+
+async function startRecording(){
+  try{
+    const stream=await navigator.mediaDevices.getUserMedia({audio:true});
+    recorder=new MediaRecorder(stream);
+    chunks=[];
+    recorder.ondataavailable=e=>chunks.push(e.data);
+    recorder.onstop=()=>{
+      currentBlob=new Blob(chunks,{type:recorder.mimeType || "audio/webm"});
+      const url=URL.createObjectURL(currentBlob);
+      const preview=document.getElementById("preview");
+      preview.src=url;
+      preview.style.display="block";
+      document.getElementById("saveBtn").style.display="block";
+      document.getElementById("status").textContent="Grabación lista. Escúchala y guárdala si te gusta.";
+      stream.getTracks().forEach(t=>t.stop());
+    };
+    recorder.start();
+    document.getElementById("recordBtn").disabled=true;
+    document.getElementById("stopBtn").disabled=false;
+    document.getElementById("status").textContent="Grabando…";
+  }catch(err){
+    document.getElementById("status").textContent="No pude acceder al micrófono. Revisa los permisos del navegador.";
+  }
+}
+function stopRecording(){
+  if(recorder && recorder.state==="recording"){
+    recorder.stop();
+    document.getElementById("recordBtn").disabled=false;
+    document.getElementById("stopBtn").disabled=true;
+  }
+}
+
+function saveRecording(){
+  if(!currentBlob) return;
+  const reader=new FileReader();
+  reader.onloadend=()=>{
+    const saved=JSON.parse(localStorage.getItem("mamaRecordings")||"[]");
+    saved.push({
+      topic:document.getElementById("topic").value,
+      title:document.getElementById("title").value.trim(),
+      note:document.getElementById("noteText").value.trim(),
+      audio:reader.result,
+      date:new Date().toLocaleString("es")
+    });
+    localStorage.setItem("mamaRecordings",JSON.stringify(saved));
+    document.getElementById("status").textContent="Mensaje guardado en este dispositivo.";
+    document.getElementById("title").value="";
+    document.getElementById("noteText").value="";
+    document.getElementById("preview").style.display="none";
+    document.getElementById("saveBtn").style.display="none";
+    currentBlob=null;
+    renderSaved();
+  };
+  reader.readAsDataURL(currentBlob);
+}
+
+function renderSaved(){
+  const box=document.getElementById("savedList");
+  const saved=JSON.parse(localStorage.getItem("mamaRecordings")||"[]");
+  if(!saved.length){
+    box.innerHTML='<div class="status">Todavía no hay mensajes guardados en este navegador.</div>';
+    return;
+  }
+  box.innerHTML=saved.map((x,i)=>`
+    <div class="saved-item">
+      <strong>${x.title || x.topic}</strong>
+      <small>${x.topic} · ${x.date}</small>
+      ${x.note ? `<div style="margin-top:7px;font-size:13px">${x.note}</div>` : ""}
+      <audio controls src="${x.audio}"></audio>
+      <button class="btn secondary" style="width:100%;margin-top:8px" onclick="deleteSaved(${i})">Eliminar de este dispositivo</button>
+    </div>
+  `).join("");
+}
+function deleteSaved(i){
+  const saved=JSON.parse(localStorage.getItem("mamaRecordings")||"[]");
+  saved.splice(i,1);
+  localStorage.setItem("mamaRecordings",JSON.stringify(saved));
+  renderSaved();
+}
+renderSaved();
+</script>
+</body>
+</html>
